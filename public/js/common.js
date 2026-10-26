@@ -14,12 +14,54 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 const ICONS = {
   instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
-  tiktok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/></svg>',
   link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
 };
 
+const STATIC_FORM_MSG = "Forms aren't live on this preview site yet — DM us on Instagram @udaapc in the meantime!";
+
+async function loadJson(name) {
+  const res = await fetch(`data/${name}.json`);
+  if (!res.ok) throw new Error('Could not load site content.');
+  return res.json();
+}
+
+// Static mode (GitHub Pages): answer the same API routes in the browser from data/*.json.
+async function staticApi(path, options) {
+  if (options.method && options.method !== 'GET') {
+    if (path === '/api/magazines/unlock') throw new Error('Magazine purchases are coming soon!');
+    throw new Error(STATIC_FORM_MSG);
+  }
+  const url = new URL(path, location.href);
+  const query = Object.fromEntries(url.searchParams);
+  const parts = url.pathname.split('/').filter(Boolean).slice(1); // drop "api"
+  const C = window.AAPCContent;
+  switch (parts[0]) {
+    case 'site': case 'eboard': case 'years': return loadJson(parts[0]);
+    case 'articles': {
+      const articles = await loadJson('articles');
+      if (!parts[1]) return C.listArticles(articles, query);
+      const article = C.getArticle(articles, decodeURIComponent(parts[1]));
+      if (!article) throw new Error('Article not found');
+      return article;
+    }
+    case 'archive': return C.archive(await loadJson('articles'));
+    case 'events': return C.listEvents(await loadJson('events'), query);
+    case 'countdowns': return C.countdowns(await loadJson('articles'), await loadJson('magazines'));
+    case 'magazines': {
+      const mags = await loadJson('magazines');
+      if (!parts[1]) return C.listMagazines(mags);
+      const mag = mags.find((m) => m.id === parts[1]);
+      if (!mag) throw new Error('Magazine not found');
+      if (mag.paywalled) throw new Error('Members-only issues are coming soon to the site!');
+      return mag;
+    }
+  }
+  throw new Error('Not found');
+}
+
 async function api(path, options = {}) {
+  if (window.AAPC_STATIC) return staticApi(path, options);
   const res = await fetch(path, {
     ...options,
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }
@@ -33,6 +75,36 @@ function esc(str) {
   return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// Scrapbook-style placeholder art (data URI) for articles/magazines without a graphic yet.
+const PALETTES = [
+  ['#c8e2c2', '#2f5e34', '#ec6fa8'],
+  ['#f7d6e4', '#b03a74', '#8fbf7f'],
+  ['#f5e9d4', '#5b4a3a', '#f2c94c'],
+  ['#dfe7f2', '#3d4f7a', '#ec6fa8'],
+  ['#e9f1d0', '#5e7d2a', '#f29fc5'],
+  ['#d9d2e9', '#4a3d6b', '#c8e2c2']
+];
+
+function placeholder(seedText) {
+  const seed = [...String(seedText)].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const [bg, ink, accent] = PALETTES[seed % PALETTES.length];
+  const rot = (seed % 14) - 7;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs><pattern id="d" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.4" fill="${ink}" opacity=".12"/></pattern></defs>
+  <rect width="800" height="600" fill="${bg}"/><rect width="800" height="600" fill="url(#d)"/>
+  <g transform="rotate(${rot} 400 300)">
+    <rect x="190" y="120" width="420" height="330" fill="#fffdf7" stroke="${ink}" stroke-opacity=".25"/>
+    <rect x="215" y="145" width="370" height="230" fill="${accent}" opacity=".55"/>
+    <path d="M400 190 C430 240 430 290 400 330 C370 290 370 240 400 190Z" fill="#fff" opacity=".9"/>
+    <path d="M400 330 C350 310 320 270 318 230 C360 245 390 280 400 330Z" fill="#fff" opacity=".75"/>
+    <path d="M400 330 C450 310 480 270 482 230 C440 245 410 280 400 330Z" fill="#fff" opacity=".75"/>
+    <rect x="300" y="105" width="200" height="34" fill="${ink}" opacity=".18" transform="rotate(-4 400 122)"/>
+  </g>
+  <text x="400" y="525" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="${ink}" letter-spacing="6">AAPC · PLACEHOLDER</text>
+</svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
 function fmtDate(iso, opts = { month: 'long', day: 'numeric', year: 'numeric' }) {
   return new Date(iso).toLocaleDateString('en-US', opts);
 }
@@ -42,8 +114,8 @@ function fmtTime(iso) {
 }
 
 function articleCard(a) {
-  return `<a class="card article-card" href="/article.html?id=${encodeURIComponent(a.id)}">
-    <div class="img"><img src="${esc(a.mainGraphic)}" alt="" loading="lazy"></div>
+  return `<a class="card article-card" href="article.html?id=${encodeURIComponent(a.id)}">
+    <div class="img"><img src="${esc(a.mainGraphic || placeholder(a.id))}" alt="" loading="lazy"></div>
     <div class="body">
       <span class="chip">${esc(a.topic)}</span>
       <h3>${esc(a.title)}</h3>
@@ -102,7 +174,7 @@ function renderChrome() {
   header.className = 'site-header';
   header.innerHTML = `<div class="gingham"></div>
     <div class="container header-inner">
-      <a class="brand" href="/" aria-label="AAPC home">
+      <a class="brand" href="index.html" aria-label="AAPC home">
         <span class="logo" role="img" aria-label="AAPC lotus logo"></span>
         <span class="brand-text"><strong>AAPC</strong><span>Asian Awareness &amp; Perspective Connections</span></span>
       </a>
@@ -142,7 +214,7 @@ function renderChrome() {
         <h3>Explore</h3>
         <div class="footer-links">
           ${NAV.map((n) => `<a href="${n.href}">${n.label}</a>`).join('')}
-          <a href="/newsletter.html">Newsletter</a>
+          <a href="newsletter.html">Newsletter</a>
         </div>
       </div>
     </div>

@@ -11,13 +11,16 @@
     api('/api/site')
   ]);
 
-  // Instagram-sticker style countdown for the next article.
+  // Instagram-sticker style countdown to next month's articles.
   const articleBox = document.getElementById('article-countdown');
-  if (countdowns.article) {
-    const a = countdowns.article;
+  if (countdowns.nextMonth) {
+    const a = countdowns.nextMonth;
+    const sub = a.count
+      ? `${a.count} new article${a.count > 1 ? 's' : ''} · ${a.topics.map(esc).join(', ')}`
+      : `New articles drop ${fmtDate(a.releaseDate, { month: 'short', day: 'numeric' })}`;
     articleBox.innerHTML = `<div class="ig-sticker">
-      <p class="title">${esc(a.title)}</p>
-      <p class="sub">New ${esc(a.topic)} article · ${fmtDate(a.releaseDate, { month: 'short', day: 'numeric' })} at ${fmtTime(a.releaseDate)}</p>
+      <p class="title">${MONTHS[a.month - 1]}'s articles coming in</p>
+      <p class="sub">${sub}</p>
       <div class="ig-digits">
         <div><b data-u="days">00</b><span>days</span></div>
         <div><b data-u="hours">00</b><span>hours</span></div>
@@ -48,7 +51,7 @@
   if (countdowns.magazine) {
     const m = countdowns.magazine;
     magBox.innerHTML = `<div class="mag-countdown">
-      <div class="mag-cover"><img src="${esc(m.cover)}" alt="${esc(m.title)} cover"></div>
+      <div class="mag-cover"><img src="${esc(m.cover || placeholder(m.id))}" alt="${esc(m.title)} cover"></div>
       <div>
         <div class="label">Magazine · Coming ${fmtDate(m.releaseDate)}</div>
         <h2>${esc(m.title)}</h2>
@@ -60,8 +63,8 @@
           <div><b data-u="seconds">00</b><span>sec</span></div>
         </div>
         <div class="actions">
-          <a class="btn" href="/newsletter.html">Notify me on release</a>
-          <a class="btn ghost" href="/magazine.html">Past issues</a>
+          <a class="btn" href="newsletter.html">Notify me on release</a>
+          <a class="btn ghost" href="magazine.html">Past issues</a>
         </div>
       </div>
     </div>`;
@@ -75,8 +78,8 @@
   // Highlighted articles carousel with gentle auto-scroll.
   const track = document.getElementById('highlights');
   track.innerHTML = featured.length
-    ? featured.map((a) => `<a class="card polaroid" href="/article.html?id=${encodeURIComponent(a.id)}">
-        <div class="img"><img src="${esc(a.mainGraphic)}" alt=""></div>
+    ? featured.map((a) => `<a class="card polaroid" href="article.html?id=${encodeURIComponent(a.id)}">
+        <div class="img"><img src="${esc(a.mainGraphic || placeholder(a.id))}" alt=""></div>
         <span class="chip pink" style="margin-top:10px">${esc(a.topic)}</span>
         <h3>${esc(a.title)}</h3>
         <p>${esc(a.excerpt)}</p>

@@ -55,7 +55,7 @@ h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
 .logo {
   width: 64px; height: 64px; flex: none; border-radius: 50%;
-  background: url('/img/logo.png') 35.2% 60% / 236% auto no-repeat;
+  background: url('../img/logo.png') 35.2% 60% / 236% auto no-repeat;
   box-shadow: 0 0 0 2px var(--forest), var(--shadow);
 }
 .brand-text { display: flex; flex-direction: column; min-width: 0; }

@@ -11,7 +11,7 @@
       <a class="btn" href="${esc(site.submissionFormUrl)}">Submit your work</a></div>
     <div class="card tape"><h3>Join the team</h3><p>We're always looking for:</p>
       <div class="topic-chips">${info.roles.map((r) => `<span class="chip">${esc(r)}</span>`).join('')}</div>
-      <a href="/feedback.html#request">Request a topic →</a></div>`;
+      <a href="feedback.html#request">Request a topic →</a></div>`;
 
   // Group issues by year, newest first.
   const years = [...new Set(mags.map((m) => m.year))].sort((a, b) => b - a);
@@ -25,14 +25,14 @@
     const list = mags.filter((m) => m.year === activeYear).sort((a, b) => b.month - a.month);
     shelf.innerHTML = list.map((m) => `
       <div class="card mag-item">
-        <div class="cover"><img src="${esc(m.cover)}" alt="${esc(m.title)} cover">
+        <div class="cover"><img src="${esc(m.cover || placeholder(m.id))}" alt="${esc(m.title)} cover">
           ${m.paywalled ? '<span class="lock">🔒 Members</span>' : '<span class="lock" style="background:var(--pink)">Free</span>'}</div>
         <h3>${esc(m.title)}</h3>
         <span class="chip pink">${esc(m.theme)}</span>
         <p class="muted" style="font-size:.88rem">${MONTHS[m.month - 1]} ${m.year} · ${m.pages} pages</p>
         ${m.released
           ? `<button class="btn${m.paywalled ? '' : ' ghost'}" data-read="${esc(m.id)}">${m.paywalled ? `Read ($${m.price})` : 'Read free'}</button>`
-          : `<a class="btn ghost" href="/">Releases ${fmtDate(m.releaseDate, { month: 'short', day: 'numeric' })}</a>`}
+          : `<a class="btn ghost" href="index.html">Releases ${fmtDate(m.releaseDate, { month: 'short', day: 'numeric' })}</a>`}
       </div>`).join('');
   }
 

@@ -1,6 +1,12 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "aapc", "runtimeExecutable": "node", "runtimeArgs": ["server.js"], "port": 3000 }
+    { "name": "aapc", "runtimeExecutable": "node", "runtimeArgs": ["server.js"], "port": 3000 },
+    {
+      "name": "aapc-static",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["-e", "const e=require('express');e().use('/AAPC',e.static('_site')).listen(3001)"],
+      "port": 3001
+    }
   ]
 }

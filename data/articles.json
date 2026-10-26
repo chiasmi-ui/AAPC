@@ -9,7 +9,14 @@
     "excerpt": "What the harvest moon means when your family is a time zone (or twelve) away.",
     "mainGraphic": null,
     "content": [],
-    "images": [{ "caption": "Placeholder photo — mooncake spread" }, { "caption": "Placeholder photo — lanterns on the Green" }]
+    "images": [
+      {
+        "caption": "Placeholder photo — mooncake spread"
+      },
+      {
+        "caption": "Placeholder photo — lanterns on the Green"
+      }
+    ]
   },
   {
     "id": "oct26-tea-bag-frames",
@@ -19,9 +26,13 @@
     "publishDate": "2026-10-08T12:00:00-04:00",
     "featured": true,
     "excerpt": "A look back at our very first fall GBM — crafts, snacks and lots of new faces.",
-    "mainGraphic": "/img/gbm-teabag-slide.webp",
+    "mainGraphic": "img/gbm-teabag-slide.webp",
     "content": [],
-    "images": [{ "caption": "Placeholder photo — members decorating frames" }]
+    "images": [
+      {
+        "caption": "Placeholder photo — members decorating frames"
+      }
+    ]
   },
   {
     "id": "oct26-third-culture",
@@ -45,7 +56,11 @@
     "excerpt": "\"Add soy sauce until it looks right.\" A love letter to imprecise instructions.",
     "mainGraphic": null,
     "content": [],
-    "images": [{ "caption": "Placeholder photo — handwritten recipe card" }]
+    "images": [
+      {
+        "caption": "Placeholder photo — handwritten recipe card"
+      }
+    ]
   },
   {
     "id": "oct26-pumpkin-pastries",
@@ -57,16 +72,50 @@
     "excerpt": "Paint-splattered hands and too many pastries — our collab with APSA in pictures.",
     "mainGraphic": null,
     "content": [],
-    "images": [{ "caption": "Placeholder photo — painted pumpkins" }, { "caption": "Placeholder photo — pastry table" }, { "caption": "Placeholder photo — group shot" }]
+    "images": [
+      {
+        "caption": "Placeholder photo — painted pumpkins"
+      },
+      {
+        "caption": "Placeholder photo — pastry table"
+      },
+      {
+        "caption": "Placeholder photo — group shot"
+      }
+    ]
   },
   {
-    "id": "oct26-zine-poetry",
+    "id": "nov26-zine-poetry",
     "title": "Three Poems for the Changing Leaves",
     "author": "Placeholder Poet",
     "topic": "Arts",
-    "publishDate": "2026-10-30T19:00:00-04:00",
+    "publishDate": "2026-11-02T19:00:00-05:00",
     "featured": false,
     "excerpt": "Short poems on autumn, distance and the colors our parents taught us to name.",
+    "mainGraphic": null,
+    "content": [],
+    "images": []
+  },
+  {
+    "id": "nov26-thanksgiving-table",
+    "title": "Our Thanksgiving Tables: Fusion Dishes From Members",
+    "author": "Placeholder Writer",
+    "topic": "Food",
+    "publishDate": "2026-11-16T12:00:00-05:00",
+    "featured": false,
+    "excerpt": "Placeholder — members share the dishes that make their family holidays their own.",
+    "mainGraphic": null,
+    "content": [],
+    "images": []
+  },
+  {
+    "id": "nov26-heritage-month-preview",
+    "title": "Looking Ahead: Planning for Heritage Month",
+    "author": "Placeholder Writer",
+    "topic": "Community",
+    "publishDate": "2026-11-24T12:00:00-05:00",
+    "featured": false,
+    "excerpt": "Placeholder — what we have in store for the spring.",
     "mainGraphic": null,
     "content": [],
     "images": []
@@ -93,7 +142,11 @@
     "excerpt": "Wong Kar-wai color palettes on a college-student budget.",
     "mainGraphic": null,
     "content": [],
-    "images": [{ "caption": "Placeholder photo — outfit flat lay" }]
+    "images": [
+      {
+        "caption": "Placeholder photo — outfit flat lay"
+      }
+    ]
   },
   {
     "id": "sep26-language-classes",
@@ -129,7 +182,11 @@
     "excerpt": "We asked students what advocacy looks like in their everyday lives.",
     "mainGraphic": null,
     "content": [],
-    "images": [{ "caption": "Placeholder photo — interview portraits" }]
+    "images": [
+      {
+        "caption": "Placeholder photo — interview portraits"
+      }
+    ]
   },
   {
     "id": "apr26-apida-classico",

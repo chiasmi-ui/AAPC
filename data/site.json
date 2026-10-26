@@ -5,16 +5,37 @@
   "about": "We are an online magazine club centered around sharing the Asian perspective through creative media. Outside of publishing, we host monthly GBMs where people can relax and have fun with fellow members.",
   "mission": "Our club's mission is to highlight the diverse voices of Asian American students while also being an inclusive and welcoming community.",
   "socials": [
-    { "name": "Instagram", "handle": "@aapc (placeholder)", "url": "#", "icon": "instagram" },
-    { "name": "TikTok", "handle": "@aapc (placeholder)", "url": "#", "icon": "tiktok" },
-    { "name": "Linktree", "handle": "All our links", "url": "#", "icon": "link" },
-    { "name": "Email", "handle": "aapc@example.com (placeholder)", "url": "mailto:aapc@example.com", "icon": "mail" }
+    {
+      "name": "Instagram",
+      "handle": "@udaapc",
+      "url": "https://www.instagram.com/udaapc/",
+      "icon": "instagram"
+    },
+    {
+      "name": "Linktree",
+      "handle": "All our links",
+      "url": "#",
+      "icon": "link"
+    },
+    {
+      "name": "Email",
+      "handle": "aapc@example.com (placeholder)",
+      "url": "mailto:aapc@example.com",
+      "icon": "mail"
+    }
   ],
   "submissionFormUrl": "#",
   "magazineInfo": {
     "what": "The AAPC Magazine is our main publication — a collection of essays, poetry, art, photography and interviews from Asian and Asian American students.",
     "schedule": "We release a full magazine issue each semester, with individual articles published on the site throughout the month.",
     "contribute": "Anyone can submit! Writing, visual art, photography, comics, recipes — if it shares a perspective, we want to see it. Submissions are open each month through our content form.",
-    "roles": ["Writers", "Editors", "Graphic designers", "Photographers", "Illustrators", "Social media"]
+    "roles": [
+      "Writers",
+      "Editors",
+      "Graphic designers",
+      "Photographers",
+      "Illustrators",
+      "Social media"
+    ]
   }
 }
