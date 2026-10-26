@@ -11,6 +11,12 @@ npm start
 
 Then open http://localhost:3000.
 
+## Live site (GitHub Pages)
+
+https://chiasmi-ui.github.io/AAPC/ — redeploys automatically on every push to `main` (`.github/workflows/pages.yml`).
+
+GitHub Pages can't run the Express backend, so the deploy is a **static build** (`npm run build:static` → `_site/`): the browser reads `data/*.json` directly using the same query code as the server (`public/js/content.js`). On the static site, forms (feedback, topic requests, newsletter) and magazine unlocking show a "coming soon" message until the backend is hosted somewhere (e.g. Render/Railway) or the forms are connected to a form service.
+
 ## How it's organized
 
 | Path | What it is |
