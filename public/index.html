@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AAPC — Asian Awareness &amp; Perspective Connections</title>
+  <meta name="description" content="AAPC is an online magazine club sharing the Asian perspective through creative media.">
+  <link rel="icon" href="/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;700&family=DM+Sans:wght@400;500;600;700;800&family=Lora:ital@0;1&family=Pinyon+Script&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body data-page="home">
+  <main>
+    <section class="container">
+      <div class="hero-split">
+        <div class="card welcome tape">
+          <span class="script">Welcome to</span>
+          <h1>Asian Awareness &amp; Perspective Connections</h1>
+          <p id="about">We are an online magazine club centered around sharing the Asian perspective through creative media. Outside of publishing, we host monthly GBMs where people can relax and have fun with fellow members.</p>
+          <p class="muted" id="mission"><em>Our mission is to highlight the diverse voices of Asian American students while also being an inclusive and welcoming community.</em></p>
+          <div class="inline-form">
+            <a class="btn" href="#this-month">Read this month</a>
+            <a class="btn ghost" href="/magazine.html">About the magazine</a>
+          </div>
+        </div>
+        <div class="side-col">
+          <div id="article-countdown"></div>
+          <div class="card mini-events tape pink">
+            <h3>Upcoming</h3>
+            <ul id="mini-events"><li class="muted">Loading…</li></ul>
+            <p style="margin:12px 0 0"><a href="/calendar.html">Full calendar →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="magazine-countdown"></section>
+
+    <section class="container">
+      <div class="section-head">
+        <div><span class="kicker">Editor's picks</span><h2>Highlighted Articles</h2></div>
+        <a href="/archives.html">Browse all →</a>
+      </div>
+      <div class="carousel">
+        <button class="carousel-btn prev" aria-label="Previous">‹</button>
+        <div class="carousel-track" id="highlights"></div>
+        <button class="carousel-btn next" aria-label="Next">›</button>
+      </div>
+    </section>
+
+    <section class="container" id="this-month">
+      <div class="section-head">
+        <div class="month-banner"><span class="script" id="month-name"></span><h2 id="month-year"></h2></div>
+        <p class="muted">Everything we've published this month</p>
+      </div>
+      <div class="grid" id="month-articles"></div>
+    </section>
+
+    <section class="container">
+      <div class="section-head"><div><span class="kicker">Stay connected</span><h2>Find us online</h2></div></div>
+      <div class="socials-band" id="socials-band"></div>
+    </section>
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/pages/home.js"></script>
+</body>
+</html>

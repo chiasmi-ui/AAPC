@@ -1,0 +1,15 @@
+{
+  "year": "2026–2027",
+  "groupPhoto": null,
+  "members": [
+    { "name": "Member Name", "role": "President", "major": "Major, Class of 20XX", "bio": "Placeholder bio — a sentence or two about what they love about AAPC.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Vice President", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Editor-in-Chief", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Managing Editor", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Creative Director", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Treasurer", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Secretary", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Social Media Chair", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
+    { "name": "Member Name", "role": "Events Chair", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null }
+  ]
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "involvement-fair-2026",
+    "title": "Fall 2026 Involvement Fair",
+    "type": "Tabling",
+    "start": "2026-08-24T13:00:00-04:00",
+    "end": "2026-08-24T16:00:00-04:00",
+    "location": "South Green, Table #132",
+    "description": "Come find AAPC at the involvement fair and learn about the club!"
+  },
+  {
+    "id": "gbm-sep-2026",
+    "title": "AAPC's First GBM: Tea Bag Frame Decorating",
+    "type": "GBM",
+    "start": "2026-09-02T18:30:00-04:00",
+    "end": "2026-09-02T20:30:00-04:00",
+    "location": "Gore 104",
+    "description": "Tea bag frame decorating, matcha + ube cookies, and learn more about the club."
+  },
+  {
+    "id": "intern-form-due",
+    "title": "Intern Application Due",
+    "type": "Deadline",
+    "start": "2026-10-09T23:59:00-04:00",
+    "end": null,
+    "location": "Online — link in bio",
+    "description": "Interested in leading a creative community? Apply to be an AAPC intern."
+  },
+  {
+    "id": "pumpkin-painting-2026",
+    "title": "Pumpkin Painting & Pastries (with APSA)",
+    "type": "GBM",
+    "start": "2026-10-22T18:00:00-04:00",
+    "end": "2026-10-22T19:30:00-04:00",
+    "location": "Gore 208",
+    "description": "Paint pumpkins and enjoy pastries with AAPC and APSA."
+  },
+  {
+    "id": "content-submissions-oct",
+    "title": "October Content Submissions Due",
+    "type": "Deadline",
+    "start": "2026-10-31T23:59:00-04:00",
+    "end": null,
+    "location": "Online — form in bio",
+    "description": "Submit your creative content (writing, art, photography) for the magazine."
+  },
+  {
+    "id": "gbm-nov-2026",
+    "title": "November GBM (placeholder)",
+    "type": "GBM",
+    "start": "2026-11-12T18:30:00-05:00",
+    "end": "2026-11-12T20:00:00-05:00",
+    "location": "TBA",
+    "description": "Details coming soon!"
+  },
+  {
+    "id": "magazine-release-fall-2026",
+    "title": "Fall 2026 Magazine Release",
+    "type": "Release",
+    "start": "2026-12-04T18:00:00-05:00",
+    "end": null,
+    "location": "Online",
+    "description": "Our Fall 2026 issue drops!"
+  }
+]
