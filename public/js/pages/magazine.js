@@ -8,7 +8,7 @@
   document.getElementById('mag-info').innerHTML = `
     <div class="card tape"><h3>Release schedule</h3><p>${esc(info.schedule)}</p></div>
     <div class="card tape pink"><h3>How to contribute</h3><p>${esc(info.contribute)}</p>
-      <a class="btn" href="${esc(site.submissionFormUrl)}">Submit your work</a></div>
+      <a class="btn" href="${esc(site.submissionFormUrl)}" target="_blank" rel="noopener">Submit your work</a></div>
     <div class="card tape"><h3>Join the team</h3><p>We're always looking for:</p>
       <div class="topic-chips">${info.roles.map((r) => `<span class="chip">${esc(r)}</span>`).join('')}</div>
       <a href="feedback.html#request">Request a topic →</a></div>`;

@@ -41,7 +41,8 @@
     "type": "Deadline",
     "start": "2026-10-31T23:59:00-04:00",
     "end": null,
-    "location": "Online — form in bio",
+    "location": "Online",
+    "link": { "label": "Submit your work", "url": "https://docs.google.com/forms/d/e/1FAIpQLSdHafofANvWcvLw1WsEiGI0nDhH3xYgudIPoYxt7GETTyEyvA/viewform" },
     "description": "Submit your creative content (writing, art, photography) for the magazine."
   },
   {

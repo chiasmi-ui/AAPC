@@ -215,6 +215,7 @@ function renderChrome() {
         <div class="footer-links">
           ${NAV.map((n) => `<a href="${n.href}">${n.label}</a>`).join('')}
           <a href="newsletter.html">Newsletter</a>
+          <a id="footer-submit" href="magazine.html" target="_blank" rel="noopener">Submit an article</a>
         </div>
       </div>
     </div>
@@ -223,6 +224,7 @@ function renderChrome() {
   wireNewsletterForm(footer.querySelector('.newsletter-form'));
   api('/api/site').then((site) => {
     footer.querySelector('#footer-socials').innerHTML = socialLinks(site.socials);
+    footer.querySelector('#footer-submit').href = site.submissionFormUrl;
   }).catch(() => {});
 }
 

@@ -33,7 +33,8 @@
           <div><span class="chip ${e.type === 'GBM' ? 'pink' : e.type === 'Deadline' ? 'gold' : ''}">${esc(e.type)}</span>
             <h3>${esc(e.title)}</h3>
             <p class="muted">${fmtTime(e.start)}${e.end ? ` – ${fmtTime(e.end)}` : ''} · ${esc(e.location)}</p>
-            <p>${esc(e.description)}</p></div>
+            <p>${esc(e.description)}</p>
+            ${e.link ? `<p><a class="btn" href="${esc(e.link.url)}" target="_blank" rel="noopener">${esc(e.link.label)}</a></p>` : ''}</div>
         </div>`).join('')
       : '<p class="empty card">No events this month yet.</p>';
   }
