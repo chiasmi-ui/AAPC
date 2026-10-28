@@ -29,7 +29,7 @@ async function openFlipbook(mag) {
       <strong>${esc(mag.title)}</strong>
       <button type="button" class="flipbook-close" aria-label="Close magazine">✕</button>
     </div>
-    <div class="flipbook-stage"><div class="flipbook-book"></div><p class="flipbook-loading">Opening the magazine…</p></div>
+    <div class="flipbook-stage"><div class="flipbook-fit"><div class="flipbook-book"></div></div><p class="flipbook-loading">Opening the magazine…</p></div>
     <div class="flipbook-controls">
       <button type="button" class="btn ghost" data-dir="prev" aria-label="Previous page">‹ Prev</button>
       <span class="flipbook-count" aria-live="polite"></span>
@@ -39,9 +39,25 @@ async function openFlipbook(mag) {
   document.body.style.overflow = 'hidden';
   const book = overlay.querySelector('.flipbook-book');
   const count = overlay.querySelector('.flipbook-count');
+  const stage = overlay.querySelector('.flipbook-stage');
+  const fit = overlay.querySelector('.flipbook-fit');
   let flip;
 
+  // StPageFlip sizes the book from its parent's width and writes its own max-width onto
+  // the book, so the size limit lives on this wrapper: as wide as possible while the
+  // pages' full height still fits the stage (two pages side by side, or one on phones).
+  const fitToStage = () => {
+    const pageRatio = mag.pageWidth / mag.pageHeight;
+    const w = stage.clientWidth - 32;
+    const h = stage.clientHeight - 16;
+    const twoUp = w >= 2 * 240;
+    fit.style.width = `${Math.floor(Math.min(w, h * pageRatio * (twoUp ? 2 : 1)))}px`;
+  };
+  fitToStage();
+  window.addEventListener('resize', fitToStage);
+
   const close = () => {
+    window.removeEventListener('resize', fitToStage);
     document.removeEventListener('keydown', onKey);
     if (flip) flip.destroy();
     overlay.remove();
