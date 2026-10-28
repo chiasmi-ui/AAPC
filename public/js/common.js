@@ -21,7 +21,8 @@ const ICONS = {
 const STATIC_FORM_MSG = "This form isn't working right now. DM us on Instagram (@udaapc) instead.";
 
 async function loadJson(name) {
-  const res = await fetch(`data/${name}.json`);
+  // no-cache = always check with the server, so content edits show up right away.
+  const res = await fetch(`data/${name}.json`, { cache: 'no-cache' });
   if (!res.ok) throw new Error('Could not load site content.');
   return res.json();
 }
