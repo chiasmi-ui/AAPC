@@ -15,7 +15,7 @@ Then open http://localhost:3000.
 
 https://chiasmi-ui.github.io/AAPC/ — redeploys automatically on every push to `main` (`.github/workflows/pages.yml`).
 
-GitHub Pages can't run the Express backend, so the deploy is a **static build** (`npm run build:static` → `_site/`): the browser reads `data/*.json` directly using the same query code as the server (`public/js/content.js`). On the static site, forms (feedback, topic requests, newsletter) and magazine unlocking show a "coming soon" message until the backend is hosted somewhere (e.g. Render/Railway) or the forms are connected to a form service.
+GitHub Pages can't run the Express backend, so the deploy is a **static build** (`npm run build:static` → `_site/`): the browser reads `data/*.json` directly using the same query code as the server (`public/js/content.js`). Forms (suggestions, newsletter, feedback, topic requests) are sent straight to the **AAPC Website Responses** Google Sheet (owned by chiasmi@udel.edu), one tab per form, through the Apps Script in `google-apps-script/Code.gs`. Its web app URL is `sheetsEndpoint` in `data/site.json`; if you change the script, use Deploy → Manage deployments → edit → New version so the URL stays the same.
 
 ## How it's organized
 
