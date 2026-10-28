@@ -1,15 +1,13 @@
 {
   "year": "2026–2027",
-  "groupPhoto": null,
   "members": [
-    { "name": "Member Name", "role": "President", "major": "Major, Class of 20XX", "bio": "Placeholder bio — a sentence or two about what they love about AAPC.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Vice President", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Editor-in-Chief", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Managing Editor", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Creative Director", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Treasurer", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Secretary", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Social Media Chair", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null },
-    { "name": "Member Name", "role": "Events Chair", "major": "Major, Class of 20XX", "bio": "Placeholder bio.", "favorite": "Favorite snack: placeholder", "photo": null }
+    { "name": "Ruthie Suarez", "role": "President", "photo": "img/eboard/ruthie.jpg", "focus": "50% 30%" },
+    { "name": "Ivan Li", "role": "Treasurer", "photo": "img/eboard/ivan.jpg", "focus": "78% 70%" },
+    { "name": "Jillian Seno", "role": "Secretary", "photo": "img/eboard/jillian.jpg", "focus": "50% 45%" },
+    { "name": "Iris Zhang", "role": "Creative Content Editor", "photo": "img/eboard/iris.jpg", "focus": "50% 40%" },
+    { "name": "Asmi Chinauriya", "role": "Graphic Designer", "photo": "img/eboard/asmi.jpg", "focus": "40% 35%" },
+    { "name": "Paulina Tep", "role": "Social Media Manager", "photo": "img/eboard/paulina.jpg", "focus": "40% 40%" },
+    { "name": "Sophia Kim", "role": "Cultural Events Manager", "photo": "img/eboard/sophia.jpg", "focus": "45% 30%" },
+    { "name": "Josh Zaballero", "role": "Audio Content Technician", "photo": "img/eboard/josh.jpg", "focus": "40% 40%" }
   ]
 }

@@ -272,12 +272,11 @@ section { padding: 44px 0 0; }
 .member { padding: 14px 14px 20px; text-align: center; }
 .member:nth-child(3n+1) { transform: rotate(-1deg); }
 .member:nth-child(3n+2) { transform: rotate(1deg); }
-.member .photo { aspect-ratio: 1; border-radius: 6px; background: var(--sage-light); display: grid; place-items: center; overflow: hidden; }
+.member .photo { aspect-ratio: 4 / 5; border-radius: 6px; background: var(--sage-light); display: grid; place-items: center; overflow: hidden; }
 .member .photo img { width: 100%; height: 100%; object-fit: cover; }
 .member .photo .initial { font: 3rem var(--script); color: var(--forest); }
-.member h3 { margin: 12px 0 2px; font-size: 1.4rem; }
-.member .role { font: 700 .8rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--pink); }
-.member p { font-size: .9rem; color: var(--muted); margin: 8px 0 0; }
+.member h3 { margin: 2px 0 0; font-size: 1.45rem; }
+.member .role { margin-top: 14px; font: 700 .78rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--pink); }
 
 /* ---------- timeline (previous years) ---------- */
 .year-block { padding: 28px; margin-top: 30px; }
@@ -364,3 +363,5 @@ section { padding: 44px 0 0; }
 .newsletter-solo .inline-form { justify-content: center; margin-top: 18px; }
 .tabs .tab-link { padding: 8px 18px; border-radius: 999px; font: 700 .9rem var(--sans); color: var(--forest); text-decoration: none; }
 .tabs .tab-link:hover { background: var(--sage-light); }
+.interns { text-align: center; padding-top: 56px; }
+.interns .script { font-size: clamp(2.4rem, 6vw, 3.6rem); color: var(--pink); margin: 0; }

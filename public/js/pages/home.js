@@ -15,12 +15,8 @@
   const articleBox = document.getElementById('article-countdown');
   if (countdowns.nextMonth) {
     const a = countdowns.nextMonth;
-    const sub = a.count
-      ? `${a.count} new article${a.count > 1 ? 's' : ''} · ${a.topics.map(esc).join(', ')}`
-      : `New articles drop ${fmtDate(a.releaseDate, { month: 'short', day: 'numeric' })}`;
     articleBox.innerHTML = `<div class="ig-sticker">
       <p class="title">${MONTHS[a.month - 1]}'s articles coming in</p>
-      <p class="sub">${sub}</p>
       <div class="ig-digits">
         <div><b data-u="days">00</b><span>days</span></div>
         <div><b data-u="hours">00</b><span>hours</span></div>
