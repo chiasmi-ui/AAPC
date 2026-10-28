@@ -7,27 +7,14 @@
     if (e.target.dataset.n) { rating = Number(e.target.dataset.n); paint(); }
   });
 
-  function wire(form, endpoint, extra = () => ({}), success) {
-    const msg = form.querySelector('.form-msg');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const body = { ...Object.fromEntries(new FormData(form)), ...extra() };
-      msg.className = 'form-msg';
-      msg.textContent = 'Sending…';
-      try {
-        await api(endpoint, { method: 'POST', body: JSON.stringify(body) });
-        msg.className = 'form-msg ok';
-        msg.textContent = success;
-        form.reset();
-        rating = 0;
-        paint();
-      } catch (err) {
-        msg.className = 'form-msg err';
-        msg.textContent = err.message;
-      }
-    });
-  }
-
-  wire(document.getElementById('feedback-form'), '/api/feedback', () => ({ rating }), 'Thank you! Your feedback was sent to the eboard.');
-  wire(document.getElementById('topic-form'), '/api/topic-requests', undefined, 'Request received — our writers will take a look!');
+  wireForm(document.getElementById('feedback-form'), '/api/feedback', {
+    required: [['message', 'Write your feedback first.']],
+    extra: () => ({ rating }),
+    success: 'Thanks! The eboard will read it.',
+    onReset: () => { rating = 0; paint(); }
+  });
+  wireForm(document.getElementById('topic-form'), '/api/topic-requests', {
+    required: [['topic', 'Tell us the topic you want covered.']],
+    success: 'Got it! We’ll pass it on to the writers.'
+  });
 })();

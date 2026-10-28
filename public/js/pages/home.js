@@ -23,23 +23,17 @@
         <div><b data-u="minutes">00</b><span>mins</span></div>
         <div><b data-u="seconds">00</b><span>secs</span></div>
       </div>
-      <button class="ig-remind" type="button">🔔 Remind me</button>
+      <button class="ig-remind" type="button">Add to calendar</button>
     </div>`;
     startCountdown(a.releaseDate, (t) => {
       for (const u of ['days', 'hours', 'minutes', 'seconds']) articleBox.querySelector(`[data-u="${u}"]`).textContent = pad(t[u]);
     });
-    const remind = articleBox.querySelector('.ig-remind');
-    const key = `remind:${a.releaseDate}`;
-    const setRemind = (on) => {
-      remind.classList.toggle('on', on);
-      remind.textContent = on ? '✓ Reminder set' : '🔔 Remind me';
-    };
-    try { setRemind(localStorage.getItem(key) === '1'); } catch {}
-    remind.addEventListener('click', () => {
-      const on = !remind.classList.contains('on');
-      setRemind(on);
-      try { localStorage.setItem(key, on ? '1' : '0'); } catch {}
-    });
+    articleBox.querySelector('.ig-remind').addEventListener('click', () => downloadIcs({
+      id: `articles-${a.year}-${a.month}`,
+      title: `New AAPC articles (${MONTHS[a.month - 1]})`,
+      start: a.releaseDate,
+      url: location.href.replace(/[^/]*$/, 'index.html')
+    }));
   }
 
   // Spotify-album style emphasized countdown for the next magazine.
@@ -47,11 +41,13 @@
   if (countdowns.magazine) {
     const m = countdowns.magazine;
     magBox.innerHTML = `<div class="mag-countdown">
-      <div class="mag-cover"><img src="${esc(m.cover || placeholder(m.id))}" alt="${esc(m.title)} cover"></div>
+      ${m.cover
+        ? `<div class="mag-cover"><img src="${esc(m.cover)}" alt="${esc(m.title)} cover"></div>`
+        : '<div class="mag-cover soon"><span class="logo" role="img" aria-label="AAPC lotus logo"></span>Cover reveal soon</div>'}
       <div>
         <div class="label">Magazine · Coming ${fmtDate(m.releaseDate)}</div>
         <h2>${esc(m.title)}</h2>
-        <p class="theme">${esc(m.theme)}</p>
+        ${m.theme ? `<p class="theme">${esc(m.theme)}</p>` : ''}
         <div class="big-timer">
           <div><b data-u="days">0</b><span>days</span></div>
           <div><b data-u="hours">00</b><span>hrs</span></div>
@@ -59,7 +55,7 @@
           <div><b data-u="seconds">00</b><span>sec</span></div>
         </div>
         <div class="actions">
-          <a class="btn" href="newsletter.html">Notify me on release</a>
+          <a class="btn" href="newsletter.html">Email me when it’s out</a>
           <a class="btn ghost" href="previous-years.html">Past issues</a>
         </div>
       </div>
@@ -99,7 +95,7 @@
   // This month's articles.
   document.getElementById('month-articles').innerHTML = monthArticles.length
     ? monthArticles.map(articleCard).join('')
-    : '<p class="empty card">No articles yet this month — check back soon!</p>';
+    : '<p class="empty card">Nothing posted yet this month.</p>';
 
   // Upcoming events (next 4).
   const upcoming = events.filter((e) => new Date(e.end || e.start) >= now).slice(0, 4);

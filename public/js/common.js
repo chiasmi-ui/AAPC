@@ -1,13 +1,13 @@
 // Shared helpers + header/footer injection used by every page.
 
 const NAV = [
-  { href: '/', label: 'Home', page: 'home' },
-  { href: '/eboard.html', label: 'Meet the Eboard', page: 'eboard' },
-  { href: '/previous-years.html', label: 'Previous Years', page: 'years' },
-  { href: '/magazine.html', label: 'More Info on Magazine', page: 'magazine' },
-  { href: '/archives.html', label: 'Archives', page: 'archives' },
-  { href: '/calendar.html', label: 'Calendar', page: 'calendar' },
-  { href: '/feedback.html', label: 'Feedback', page: 'feedback' }
+  { href: 'index.html', label: 'Home', page: 'home' },
+  { href: 'eboard.html', label: 'Meet the Eboard', page: 'eboard' },
+  { href: 'previous-years.html', label: 'Previous Years', page: 'years' },
+  { href: 'magazine.html', label: 'More Info on Magazine', page: 'magazine' },
+  { href: 'archives.html', label: 'Archives', page: 'archives' },
+  { href: 'calendar.html', label: 'Calendar', page: 'calendar' },
+  { href: 'feedback.html', label: 'Feedback', page: 'feedback' }
 ];
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -18,7 +18,7 @@ const ICONS = {
   mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
 };
 
-const STATIC_FORM_MSG = "Forms aren't live on this preview site yet — DM us on Instagram @udaapc in the meantime!";
+const STATIC_FORM_MSG = "This form isn't working right now. DM us on Instagram (@udaapc) instead.";
 
 async function loadJson(name) {
   const res = await fetch(`data/${name}.json`);
@@ -72,10 +72,15 @@ let sitePromise;
 const getSite = () => (sitePromise = sitePromise || api('/api/site'));
 
 async function postToSheet(endpoint, type, body) {
-  // text/plain keeps this a "simple" request, which Apps Script web apps accept cross-origin.
-  const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ ...body, type }) });
+  let res;
+  try {
+    // text/plain keeps this a "simple" request, which Apps Script web apps accept cross-origin.
+    res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ ...body, type }) });
+  } catch {
+    throw new Error("Couldn't send that. Check your connection and try again.");
+  }
   const data = await res.json().catch(() => ({}));
-  if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong — please try again.');
+  if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong. Please try again.');
   return data;
 }
 
@@ -168,21 +173,72 @@ function startCountdown(targetIso, render) {
 
 const pad = (n) => String(n).padStart(2, '0');
 
-function wireNewsletterForm(form) {
+// Downloads a one-hour .ics event that opens in Google/Apple/Outlook calendars.
+function downloadIcs({ id, title, start, url }) {
+  const stamp = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const begin = new Date(start);
+  const ics = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//AAPC//Website//EN', 'BEGIN:VEVENT',
+    `UID:${id}@aapc`, `DTSTAMP:${stamp(new Date())}`, `DTSTART:${stamp(begin)}`,
+    `DTEND:${stamp(new Date(begin.getTime() + 3600000))}`, `SUMMARY:${title}`, `URL:${url}`,
+    'END:VEVENT', 'END:VCALENDAR'
+  ].join('\r\n');
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+  link.download = `${id}.ics`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Shared submit handling: checks fields in the browser first, blocks double submits,
+// and shows the result under the form. required: [[field, message, minLength]].
+function wireForm(form, endpoint, { required = [], extra = () => ({}), success, onReset } = {}) {
   const msg = form.querySelector('.form-msg');
+  const button = form.querySelector('[type="submit"]');
+  const show = (text, cls = '') => {
+    msg.className = `form-msg ${cls}`;
+    msg.textContent = text;
+  };
+  let busy = false;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    msg.className = 'form-msg';
-    msg.textContent = 'Adding you…';
-    try {
-      const res = await api('/api/newsletter', { method: 'POST', body: JSON.stringify({ email: form.email.value }) });
-      msg.className = 'form-msg ok';
-      msg.textContent = res.already ? "You're already on the list — thank you!" : "You're in! Watch your inbox for the next issue.";
-      form.reset();
-    } catch (err) {
-      msg.className = 'form-msg err';
-      msg.textContent = err.message;
+    if (busy) return;
+    const body = { ...Object.fromEntries(new FormData(form)), ...extra() };
+    for (const [field, message, min = 3] of required) {
+      if (String(body[field] || '').trim().length < min) {
+        show(message, 'err');
+        form.elements[field].focus();
+        return;
+      }
     }
+    if (body.email && !EMAIL_RE.test(body.email.trim())) {
+      show('That email address doesn’t look right.', 'err');
+      form.elements.email.focus();
+      return;
+    }
+    busy = true;
+    button.disabled = true;
+    show('Sending…');
+    try {
+      const res = await api(endpoint, { method: 'POST', body: JSON.stringify(body) });
+      show(typeof success === 'function' ? success(res) : success, 'ok');
+      form.reset();
+      if (onReset) onReset();
+    } catch (err) {
+      show(err.message, 'err');
+    } finally {
+      busy = false;
+      button.disabled = false;
+    }
+  });
+}
+
+function wireNewsletterForm(form) {
+  wireForm(form, '/api/newsletter', {
+    required: [['email', 'Enter your email to sign up.', 1]],
+    success: (res) => (res.already ? "You're already on the list!" : "You're on the list. See you in your inbox.")
   });
 }
 
@@ -209,17 +265,20 @@ function renderChrome() {
   document.body.prepend(header);
   const toggle = header.querySelector('.menu-toggle');
   const nav = header.querySelector('.nav');
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
+  const setMenu = (open) => {
+    nav.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', open);
-  });
+  };
+  toggle.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  nav.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
   const footer = document.createElement('footer');
   footer.className = 'site-footer';
   footer.innerHTML = `<div class="container footer-grid">
       <div>
-        <h3>Join the newsletter</h3>
-        <p>New articles, magazine drops and GBM invites — straight to your inbox.</p>
+        <h3>Newsletter</h3>
+        <p>Get new articles and GBM dates by email.</p>
         <form class="form newsletter-form" novalidate>
           <div class="inline-form">
             <label class="visually-hidden" for="footer-email">Email</label>
@@ -230,19 +289,12 @@ function renderChrome() {
         </form>
       </div>
       <div>
-        <h3>Follow along</h3>
+        <h3>Get in touch</h3>
         <ul class="social-list" id="footer-socials"></ul>
-      </div>
-      <div>
-        <h3>Explore</h3>
-        <div class="footer-links">
-          ${NAV.map((n) => `<a href="${n.href}">${n.label}</a>`).join('')}
-          <a href="newsletter.html">Newsletter</a>
-          <a id="footer-submit" href="magazine.html" target="_blank" rel="noopener">Submit an article</a>
-        </div>
+        <p class="footer-submit">Want to write for us? <a id="footer-submit" href="magazine.html" target="_blank" rel="noopener">Submit an article</a></p>
       </div>
     </div>
-    <div class="footer-bottom"><div class="container">© ${new Date().getFullYear()} AAPC — Asian Awareness &amp; Perspective Connections</div></div>`;
+    <div class="footer-bottom"><div class="container">© ${new Date().getFullYear()} AAPC · University of Delaware</div></div>`;
   document.body.append(footer);
   wireNewsletterForm(footer.querySelector('.newsletter-form'));
   api('/api/site').then((site) => {

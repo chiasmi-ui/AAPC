@@ -12,12 +12,6 @@
       "icon": "instagram"
     },
     {
-      "name": "Linktree",
-      "handle": "All our links",
-      "url": "#",
-      "icon": "link"
-    },
-    {
       "name": "Email",
       "handle": "aapc.ud@gmail.com",
       "url": "mailto:aapc.ud@gmail.com",
@@ -25,18 +19,5 @@
     }
   ],
   "submissionFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdHafofANvWcvLw1WsEiGI0nDhH3xYgudIPoYxt7GETTyEyvA/viewform",
-  "sheetsEndpoint": "https://script.google.com/macros/s/AKfycbxWiv2UmGhbz4BuIVasyXinKv7uOm_MFzOxKK_lYWYQuigOvNfjkpdHoZ-8RbY6UWdE/exec",
-  "magazineInfo": {
-    "what": "The AAPC Magazine is our main publication — a collection of essays, poetry, art, photography and interviews from Asian and Asian American students.",
-    "schedule": "We release a full magazine issue each semester, with individual articles published on the site throughout the month.",
-    "contribute": "Anyone can submit! Writing, visual art, photography, comics, recipes — if it shares a perspective, we want to see it. Submissions are open each month through our content form.",
-    "roles": [
-      "Writers",
-      "Editors",
-      "Graphic designers",
-      "Photographers",
-      "Illustrators",
-      "Social media"
-    ]
-  }
+  "sheetsEndpoint": "https://script.google.com/macros/s/AKfycbxWiv2UmGhbz4BuIVasyXinKv7uOm_MFzOxKK_lYWYQuigOvNfjkpdHoZ-8RbY6UWdE/exec"
 }

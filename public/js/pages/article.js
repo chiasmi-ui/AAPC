@@ -2,8 +2,9 @@
   const root = document.getElementById('article');
   const id = new URLSearchParams(location.search).get('id');
   try {
-    const a = await api(`/api/articles/${encodeURIComponent(id || '')}`);
-    document.title = `${a.title} — AAPC`;
+    if (!id) throw new Error('No article was picked.');
+    const a = await api(`/api/articles/${encodeURIComponent(id)}`);
+    document.title = `${a.title} | AAPC`;
     root.innerHTML = `
       <header class="article-head">
         <span class="chip pink">${esc(a.topic)}</span>
@@ -11,7 +12,7 @@
         <p class="muted">${esc(a.excerpt)}</p>
         <div class="meta" style="justify-content:center">By <strong>${esc(a.author)}</strong> · ${fmtDate(a.publishDate)}</div>
       </header>
-      <figure class="card main-graphic tape" style="margin:0"><img src="${esc(a.mainGraphic || placeholder(a.id))}" alt="${esc(a.title)} main graphic"></figure>
+      <figure class="card main-graphic" style="margin:0"><img src="${esc(a.mainGraphic || placeholder(a.id))}" alt="${esc(a.title)} main graphic"></figure>
       <div class="card article-body">${a.content.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
       ${a.images.length ? `<div class="gallery">${a.images.map((img, i) => `
         <figure class="card"><img src="${esc(img.src || placeholder(`${a.id}-img${i + 1}`))}" alt="${esc(img.caption || '')}" loading="lazy">

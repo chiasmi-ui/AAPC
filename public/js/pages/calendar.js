@@ -10,7 +10,7 @@
   function render() {
     const y = view.getFullYear();
     const m = view.getMonth();
-    document.getElementById('cal-title').innerHTML = `<span class="script">${MONTHS[m]}</span> ${y}`;
+    document.getElementById('cal-title').innerHTML = `${MONTHS[m]} ${y}`;
     const start = new Date(y, m, 1 - new Date(y, m, 1).getDay());
     let html = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => `<div class="dow">${d}</div>`).join('');
     for (let i = 0; i < 42; i++) {

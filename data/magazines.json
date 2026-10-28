@@ -1,8 +1,8 @@
 [
   {
     "id": "fall-2026",
-    "title": "Fall 2026 Edition",
-    "theme": "Roots & Routes (placeholder theme)",
+    "title": "Our next issue",
+    "theme": "",
     "year": 2026,
     "month": 12,
     "releaseDate": "2026-12-04T18:00:00-05:00",
@@ -10,40 +10,7 @@
     "pages": 40,
     "paywalled": true,
     "price": 5,
-    "description": "Placeholder description for the upcoming fall issue.",
-    "fullContent": ["Placeholder magazine content."]
-  },
-  {
-    "id": "april-2026",
-    "title": "April 2026 Edition",
-    "theme": "Activism & Advocacy",
-    "year": 2026,
-    "month": 4,
-    "releaseDate": "2026-04-30T18:00:00-04:00",
-    "cover": null,
-    "pages": 36,
-    "paywalled": true,
-    "price": 5,
-    "description": "Our spring issue on activism, advocacy and the voices pushing for change.",
-    "fullContent": [
-      "Placeholder — the full digital issue (e.g. an embedded PDF/flipbook) will appear here for members.",
-      "Section 1: A History of Solidarity",
-      "Section 2: Voices on Campus",
-      "Section 3: Art as Protest"
-    ]
-  },
-  {
-    "id": "dec-2025",
-    "title": "Winter 2025 Edition",
-    "theme": "Home for the Holidays (placeholder)",
-    "year": 2025,
-    "month": 12,
-    "releaseDate": "2025-12-05T18:00:00-05:00",
-    "cover": null,
-    "pages": 32,
-    "paywalled": false,
-    "price": 0,
-    "description": "Placeholder description — a free issue to welcome new readers.",
-    "fullContent": ["Placeholder — full issue content."]
+    "description": "",
+    "fullContent": []
   }
 ]

@@ -42,25 +42,19 @@
     "start": "2026-10-31T23:59:00-04:00",
     "end": null,
     "location": "Online",
-    "link": { "label": "Submit your work", "url": "https://docs.google.com/forms/d/e/1FAIpQLSdHafofANvWcvLw1WsEiGI0nDhH3xYgudIPoYxt7GETTyEyvA/viewform" },
+    "link": {
+      "label": "Submit your work",
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdHafofANvWcvLw1WsEiGI0nDhH3xYgudIPoYxt7GETTyEyvA/viewform"
+    },
     "description": "Submit your creative content (writing, art, photography) for the magazine."
   },
   {
-    "id": "gbm-nov-2026",
-    "title": "November GBM (placeholder)",
-    "type": "GBM",
-    "start": "2026-11-12T18:30:00-05:00",
-    "end": "2026-11-12T20:00:00-05:00",
-    "location": "TBA",
-    "description": "Details coming soon!"
-  },
-  {
     "id": "magazine-release-fall-2026",
-    "title": "Fall 2026 Magazine Release",
+    "title": "Magazine release",
     "type": "Release",
     "start": "2026-12-04T18:00:00-05:00",
     "end": null,
     "location": "Online",
-    "description": "Our Fall 2026 issue drops!"
+    "description": "Our next issue comes out."
   }
 ]
