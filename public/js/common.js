@@ -60,7 +60,30 @@ async function staticApi(path, options) {
   throw new Error('Not found');
 }
 
+// Form posts go to the Google Sheet (via the Apps Script in google-apps-script/) once
+// site.json has a `sheetsEndpoint`; the value of `type` picks the sheet tab.
+const SHEET_FORMS = {
+  '/api/suggestions': 'suggestions',
+  '/api/newsletter': 'newsletter',
+  '/api/feedback': 'feedback',
+  '/api/topic-requests': 'topic-requests'
+};
+let sitePromise;
+const getSite = () => (sitePromise = sitePromise || api('/api/site'));
+
+async function postToSheet(endpoint, type, body) {
+  // text/plain keeps this a "simple" request, which Apps Script web apps accept cross-origin.
+  const res = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ ...body, type }) });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong — please try again.');
+  return data;
+}
+
 async function api(path, options = {}) {
+  if (options.method === 'POST' && SHEET_FORMS[path]) {
+    const site = await getSite();
+    if (site.sheetsEndpoint) return postToSheet(site.sheetsEndpoint, SHEET_FORMS[path], JSON.parse(options.body || '{}'));
+  }
   if (window.AAPC_STATIC) return staticApi(path, options);
   const res = await fetch(path, {
     ...options,

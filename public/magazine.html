@@ -13,16 +13,22 @@
 <body data-page="magazine">
   <main>
     <section class="container page-hero">
-      <span class="script">All about the</span>
       <h1>AAPC Magazine</h1>
-      <p id="mag-what"></p>
+      <span class="script coming-soon">Information coming soon....</span>
+      <p>In the meantime, you can <a href="previous-years.html">read Volume 1 (2025–2026)</a>.</p>
     </section>
-    <section class="container"><div class="info-grid" id="mag-info"></div></section>
     <section class="container">
-      <div class="section-head"><div><span class="kicker">Archive</span><h2>Magazine Issues</h2></div>
-        <div class="tabs" id="mag-years"></div></div>
-      <div class="mag-shelf" id="mag-shelf"></div>
-      <div id="reader"></div>
+      <div class="card suggestion-box tape pink">
+        <h2>What should we add?</h2>
+        <p class="muted">Tell us what you'd like to see in the magazine or on this page — themes, sections, formats, anything.</p>
+        <form class="form" id="suggestion-form" novalidate>
+          <label>Your suggestion<textarea name="suggestion" required placeholder="I'd love to see…"></textarea></label>
+          <label>Name (optional)<input name="name" autocomplete="name"></label>
+          <label>Email (optional, if you'd like a reply)<input name="email" type="email" autocomplete="email"></label>
+          <button class="btn pink" type="submit">Send suggestion</button>
+          <p class="form-msg" role="status"></p>
+        </form>
+      </div>
     </section>
   </main>
 

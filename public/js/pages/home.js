@@ -60,7 +60,7 @@
         </div>
         <div class="actions">
           <a class="btn" href="newsletter.html">Notify me on release</a>
-          <a class="btn ghost" href="magazine.html">Past issues</a>
+          <a class="btn ghost" href="previous-years.html">Past issues</a>
         </div>
       </div>
     </div>`;

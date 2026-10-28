@@ -2,22 +2,61 @@
   {
     "year": "2025–2026",
     "summary": "Placeholder summary of the 2025–2026 year — the issues we published, the events we hosted and the community we grew.",
-    "eboard": ["President — Name", "Vice President — Name", "Editor-in-Chief — Name", "Creative Director — Name", "Treasurer — Name"],
+    "eboard": [
+      "President — Name",
+      "Vice President — Name",
+      "Editor-in-Chief — Name",
+      "Creative Director — Name",
+      "Treasurer — Name"
+    ],
     "highlights": [
-      { "title": "Winter 2025 Edition released", "date": "December 2025" },
-      { "title": "Lunar New Year celebration", "date": "February 2026" },
-      { "title": "April Edition: Activism & Advocacy", "date": "April 2026" },
-      { "title": "APIDA Classico — Battle of the Orgs with APSA & VSA", "date": "May 2026" },
-      { "title": "2026–2027 Eboard applications", "date": "April 2026" }
-    ]
+      {
+        "title": "Winter 2025 Edition released",
+        "date": "December 2025"
+      },
+      {
+        "title": "Lunar New Year celebration",
+        "date": "February 2026"
+      },
+      {
+        "title": "April Edition: Activism & Advocacy",
+        "date": "April 2026"
+      },
+      {
+        "title": "APIDA Classico — Battle of the Orgs with APSA & VSA",
+        "date": "May 2026"
+      },
+      {
+        "title": "2026–2027 Eboard applications",
+        "date": "April 2026"
+      }
+    ],
+    "magazine": {
+      "title": "AAPC Magazine — Volume 1",
+      "subtitle": "2025–2026",
+      "path": "magazines/vol1-2025-2026",
+      "pages": 112,
+      "pageWidth": 1545,
+      "pageHeight": 1999
+    }
   },
   {
     "year": "2024–2025",
     "summary": "Placeholder summary — add the club's founding story or earlier years here.",
-    "eboard": ["President — Name", "Vice President — Name", "Editor-in-Chief — Name"],
+    "eboard": [
+      "President — Name",
+      "Vice President — Name",
+      "Editor-in-Chief — Name"
+    ],
     "highlights": [
-      { "title": "Placeholder highlight", "date": "Fall 2024" },
-      { "title": "Placeholder highlight", "date": "Spring 2025" }
+      {
+        "title": "Placeholder highlight",
+        "date": "Fall 2024"
+      },
+      {
+        "title": "Placeholder highlight",
+        "date": "Spring 2025"
+      }
     ]
   }
 ]

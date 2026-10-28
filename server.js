@@ -134,6 +134,15 @@ app.post('/api/topic-requests', (req, res) => {
   res.status(201).json({ ok: true });
 });
 
+app.post('/api/suggestions', (req, res) => {
+  const suggestion = clean(req.body.suggestion);
+  if (suggestion.length < 3) return res.status(400).json({ error: 'Please write a suggestion first.' });
+  const email = clean(req.body.email, 200);
+  if (email && !EMAIL_RE.test(email)) return res.status(400).json({ error: 'That email does not look right.' });
+  appendSubmission('suggestions', { suggestion, name: clean(req.body.name, 100), email });
+  res.status(201).json({ ok: true });
+});
+
 app.post('/api/newsletter', (req, res) => {
   const email = clean(req.body.email, 200).toLowerCase();
   if (!EMAIL_RE.test(email)) return res.status(400).json({ error: 'Please enter a valid email address.' });
