@@ -1,6 +1,7 @@
 /**
  * AAPC website → Google Sheet.
- * Paste this into Extensions → Apps Script on the AAPC Google Sheet, then deploy it as a web app
+ * Paste this into an Apps Script project (attached to the AAPC Sheet, or standalone with SHEET_ID set),
+ * then deploy it as a web app
  * (Execute as: Me, Who has access: Anyone). Put the web app URL in data/site.json → "sheetsEndpoint".
  * Each form type gets its own tab, created automatically with a header row.
  * New newsletter sign-ups get a welcome email sent from the account that owns this script
@@ -12,6 +13,9 @@ const FORMS = {
   feedback: ['category', 'rating', 'message', 'name', 'email'],
   'topic-requests': ['topic', 'category', 'details', 'name', 'email']
 };
+// ID of the responses Sheet (from its URL). Leave empty when the script is attached to the Sheet
+// through Extensions → Apps Script; set it when the script is a standalone project.
+const SHEET_ID = '1Vr5qmv93kE4wodSz46LLv7tw-tlK8sPVoBmCsaWAV9A';
 const REQUIRED = { suggestions: 'suggestion', newsletter: 'email', feedback: 'message', 'topic-requests': 'topic' };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -35,7 +39,7 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(data.type);
     if (!sheet) {
       sheet = ss.insertSheet(data.type);

@@ -267,7 +267,7 @@ function wireNewsletterForm(form) {
   }
   wireForm(form, '/api/newsletter', {
     required: [['email', 'Enter your email to sign up.', 1]],
-    success: (res) => (res.already ? "You're already on the list!" : "You're on the list! Thanks for signing up."),
+    success: (res) => (res.already ? "You're already on the list!" : "You're on the list! Check your inbox for a welcome email."),
     onSuccess: (body) => store.set('newsletter-email', body.email.trim().toLowerCase())
   });
 }
