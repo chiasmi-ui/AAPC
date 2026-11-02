@@ -174,34 +174,53 @@ function startCountdown(targetIso, render) {
 
 const pad = (n) => String(n).padStart(2, '0');
 
-// Downloads a one-hour .ics event that opens in Google/Apple/Outlook calendars.
-function downloadIcs({ id, title, start, url }) {
+// Google Calendar "add event" link. Events without an end time get one hour.
+function googleCalendarUrl({ title, start, end, details = '', location = '' }) {
   const stamp = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   const begin = new Date(start);
-  const ics = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//AAPC//Website//EN', 'BEGIN:VEVENT',
-    `UID:${id}@aapc`, `DTSTAMP:${stamp(new Date())}`, `DTSTART:${stamp(begin)}`,
-    `DTEND:${stamp(new Date(begin.getTime() + 3600000))}`, `SUMMARY:${title}`, `URL:${url}`,
-    'END:VEVENT', 'END:VCALENDAR'
-  ].join('\r\n');
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
-  link.download = `${id}.ics`;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  const finish = end ? new Date(end) : new Date(begin.getTime() + 3600000);
+  const q = new URLSearchParams({ action: 'TEMPLATE', text: title, dates: `${stamp(begin)}/${stamp(finish)}`, details, location });
+  return `https://calendar.google.com/calendar/render?${q}`;
 }
+
+// Opens a Gmail compose window instead of the computer's default mail app.
+const gmailComposeUrl = (to) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}`;
+const socialHref = (s) => (s.url.startsWith('mailto:') ? gmailComposeUrl(s.url.slice(7)) : s.url);
+
+// Per-visitor memory in localStorage (filters, form drafts, reading spot). Fails quietly when
+// storage is blocked, e.g. some private windows, so the site still works without it.
+const store = {
+  get(key, fallback = null) {
+    try {
+      const v = localStorage.getItem(`aapc:${key}`);
+      return v === null ? fallback : JSON.parse(v);
+    } catch { return fallback; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(`aapc:${key}`, JSON.stringify(value)); } catch {}
+  },
+  remove(key) {
+    try { localStorage.removeItem(`aapc:${key}`); } catch {}
+  }
+};
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Shared submit handling: checks fields in the browser first, blocks double submits,
 // and shows the result under the form. required: [[field, message, minLength]].
-function wireForm(form, endpoint, { required = [], extra = () => ({}), success, onReset } = {}) {
+// draftKey: keep what the visitor typed if they leave or refresh before sending.
+function wireForm(form, endpoint, { required = [], extra = () => ({}), success, onReset, onSuccess, draftKey } = {}) {
   const msg = form.querySelector('.form-msg');
   const button = form.querySelector('[type="submit"]');
   const show = (text, cls = '') => {
     msg.className = `form-msg ${cls}`;
     msg.textContent = text;
   };
+  if (draftKey) {
+    const draft = store.get(`draft:${draftKey}`, {});
+    for (const [name, value] of Object.entries(draft)) if (form.elements[name]) form.elements[name].value = value;
+    form.addEventListener('input', () => store.set(`draft:${draftKey}`, Object.fromEntries(new FormData(form))));
+  }
   let busy = false;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -225,7 +244,9 @@ function wireForm(form, endpoint, { required = [], extra = () => ({}), success, 
     try {
       const res = await api(endpoint, { method: 'POST', body: JSON.stringify(body) });
       show(typeof success === 'function' ? success(res) : success, 'ok');
+      if (onSuccess) onSuccess(body, res);
       form.reset();
+      if (draftKey) store.remove(`draft:${draftKey}`);
       if (onReset) onReset();
     } catch (err) {
       show(err.message, 'err');
@@ -236,15 +257,23 @@ function wireForm(form, endpoint, { required = [], extra = () => ({}), success, 
   });
 }
 
+// Remembers the signed-up email in this browser so returning visitors see they're on the list.
 function wireNewsletterForm(form) {
+  const msg = form.querySelector('.form-msg');
+  const subscribed = store.get('newsletter-email');
+  if (subscribed) {
+    msg.className = 'form-msg ok';
+    msg.textContent = `You're signed up as ${subscribed}.`;
+  }
   wireForm(form, '/api/newsletter', {
     required: [['email', 'Enter your email to sign up.', 1]],
-    success: (res) => (res.already ? "You're already on the list!" : "You're on the list. See you in your inbox.")
+    success: (res) => (res.already ? "You're already on the list!" : "You're on the list! Check your inbox for a welcome email."),
+    onSuccess: (body) => store.set('newsletter-email', body.email.trim().toLowerCase())
   });
 }
 
 function socialLinks(socials, cls = '') {
-  return socials.map((s) => `<li><a class="${cls}" href="${esc(s.url)}" target="_blank" rel="noopener">
+  return socials.map((s) => `<li><a class="${cls}" href="${esc(socialHref(s))}" target="_blank" rel="noopener">
     <span class="social-icon">${ICONS[s.icon] || ICONS.link}</span><span><strong>${esc(s.name)}</strong> ${esc(s.handle)}</span></a></li>`).join('');
 }
 

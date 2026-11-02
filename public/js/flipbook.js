@@ -95,7 +95,10 @@ async function openFlipbook(mag) {
       if (!img.src) img.src = pageSrc(mag, i);
     }
   };
-  loadAround(0);
+  // Reopen at the page the visitor was last on (kept in this browser).
+  const pageKey = `magazine-page:${mag.path}`;
+  const startPage = Math.min(Math.max(0, Number(store.get(pageKey, 0)) || 0), mag.pages - 1);
+  loadAround(startPage);
 
   flip = new St.PageFlip(book, {
     width: mag.pageWidth,
@@ -106,6 +109,7 @@ async function openFlipbook(mag) {
     minHeight: 310,
     maxHeight: 1999,
     showCover: true,
+    startPage,
     usePortrait: true,
     mobileScrollSupport: false,
     maxShadowOpacity: 0.4
@@ -118,9 +122,12 @@ async function openFlipbook(mag) {
     const last = Math.min(mag.pages, index + (orient === 'landscape' && index > 0 ? 2 : 1));
     count.textContent = last > index + 1 ? `Pages ${index + 1}–${last} of ${mag.pages}` : `Page ${index + 1} of ${mag.pages}`;
   };
-  flip.on('flip', (e) => update(e.data));
+  flip.on('flip', (e) => {
+    update(e.data);
+    store.set(pageKey, e.data);
+  });
   flip.on('changeOrientation', () => update(flip.getCurrentPageIndex()));
-  update(0);
+  update(flip.getCurrentPageIndex());
 
   overlay.querySelector('[data-dir="prev"]').onclick = () => flip.flipPrev();
   overlay.querySelector('[data-dir="next"]').onclick = () => flip.flipNext();

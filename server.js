@@ -80,6 +80,7 @@ app.get('/api/archive', (req, res) => res.json(content.archive(readData('article
 
 // GET /api/events?year=2026&month=10
 app.get('/api/events', (req, res) => res.json(content.listEvents(readData('events'), req.query)));
+app.get('/events.ics', (req, res) => res.type('text/calendar').send(content.eventsIcs(readData('events'))));
 
 // ---------- countdowns ----------
 

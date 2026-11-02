@@ -1,4 +1,8 @@
 (async function calendarPage() {
+  // Subscribing (vs. adding one event) keeps the visitor's calendar in sync with events.ics.
+  const feed = new URL('events.ics', location.href).href.replace(/^https?:/, 'webcal:');
+  document.getElementById('cal-subscribe').href = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(feed)}`;
+
   const events = await api('/api/events');
   const today = new Date();
   let view = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -34,7 +38,8 @@
             <h3>${esc(e.title)}</h3>
             <p class="muted">${fmtTime(e.start)}${e.end ? ` – ${fmtTime(e.end)}` : ''} · ${esc(e.location)}</p>
             <p>${esc(e.description)}</p>
-            ${e.link ? `<p><a class="btn" href="${esc(e.link.url)}" target="_blank" rel="noopener">${esc(e.link.label)}</a></p>` : ''}</div>
+            <p class="event-actions">${e.link ? `<a class="btn" href="${esc(e.link.url)}" target="_blank" rel="noopener">${esc(e.link.label)}</a>` : ''}
+              <a class="btn ghost" href="${esc(googleCalendarUrl({ title: `AAPC: ${e.title}`, start: e.start, end: e.end, details: e.description, location: e.location }))}" target="_blank" rel="noopener">Add to Google Calendar</a></p></div>
         </div>`).join('')
       : '<p class="empty card">No events this month yet.</p>';
   }

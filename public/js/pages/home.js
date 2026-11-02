@@ -23,17 +23,15 @@
         <div><b data-u="minutes">00</b><span>mins</span></div>
         <div><b data-u="seconds">00</b><span>secs</span></div>
       </div>
-      <button class="ig-remind" type="button">Add to calendar</button>
+      <a class="ig-remind" target="_blank" rel="noopener" href="${esc(googleCalendarUrl({
+        title: `New AAPC articles (${MONTHS[a.month - 1]})`,
+        start: a.releaseDate,
+        details: `Read them at ${location.href.replace(/[^/]*$/, 'index.html')}`
+      }))}">Add to Google Calendar</a>
     </div>`;
     startCountdown(a.releaseDate, (t) => {
       for (const u of ['days', 'hours', 'minutes', 'seconds']) articleBox.querySelector(`[data-u="${u}"]`).textContent = pad(t[u]);
     });
-    articleBox.querySelector('.ig-remind').addEventListener('click', () => downloadIcs({
-      id: `articles-${a.year}-${a.month}`,
-      title: `New AAPC articles (${MONTHS[a.month - 1]})`,
-      start: a.releaseDate,
-      url: location.href.replace(/[^/]*$/, 'index.html')
-    }));
   }
 
   // Spotify-album style emphasized countdown for the next magazine.
@@ -56,6 +54,7 @@
         </div>
         <div class="actions">
           <a class="btn" href="newsletter.html">Email me when it’s out</a>
+          <a class="btn ghost" target="_blank" rel="noopener" href="${esc(googleCalendarUrl({ title: `AAPC magazine release: ${m.title}`, start: m.releaseDate, details: `Read it at ${location.href.replace(/[^/]*$/, "index.html")}` }))}">Add to Google Calendar</a>
           <a class="btn ghost" href="previous-years.html">Past issues</a>
         </div>
       </div>
@@ -107,7 +106,7 @@
     : '<li class="muted">No upcoming events.</li>';
 
   document.getElementById('socials-band').innerHTML = site.socials.map((s) => `
-    <a class="card social-card" href="${esc(s.url)}" target="_blank" rel="noopener">
+    <a class="card social-card" href="${esc(socialHref(s))}" target="_blank" rel="noopener">
       <span class="social-icon">${ICONS[s.icon] || ICONS.link}</span>
       <span><strong>${esc(s.name)}</strong><span>${esc(s.handle)}</span></span>
     </a>`).join('');

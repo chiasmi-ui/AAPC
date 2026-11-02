@@ -17,6 +17,10 @@ for (const file of fs.readdirSync(path.join(ROOT, 'data'))) {
   if (file === 'magazines.json') data = data.map((m) => (m.paywalled ? { ...m, fullContent: [] } : m));
   fs.writeFileSync(path.join(OUT, 'data', file), JSON.stringify(data));
 }
+// Calendar feed people can subscribe to (same generator the server uses).
+const content = require(path.join(ROOT, 'public', 'js', 'content.js'));
+fs.writeFileSync(path.join(OUT, 'events.ics'), content.eventsIcs(JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'events.json'), 'utf8'))));
+
 // Stamp local script/style URLs with a build version so browsers fetch fresh code after
 // every deploy instead of reusing a cached copy (GitHub Pages caches files for 10 minutes).
 const version = Date.now().toString(36);

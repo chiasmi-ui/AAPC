@@ -96,5 +96,19 @@
       .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
   }
 
-  return { isPublished, listArticles, getArticle, archive, listEvents, countdowns, listMagazines };
+  // iCalendar feed of every event, for "subscribe" links (Google Calendar re-reads it on its own).
+  function eventsIcs(events, now = new Date()) {
+    const stamp = (d) => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const text = (s) => String(s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//AAPC//Website//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:AAPC Events'];
+    for (const e of events) {
+      const end = e.end || new Date(new Date(e.start).getTime() + 3600000).toISOString();
+      lines.push('BEGIN:VEVENT', `UID:${e.id}@aapc`, `DTSTAMP:${stamp(now)}`, `DTSTART:${stamp(e.start)}`, `DTEND:${stamp(end)}`,
+        `SUMMARY:${text(e.title)}`, `DESCRIPTION:${text(e.description)}`, `LOCATION:${text(e.location)}`, 'END:VEVENT');
+    }
+    lines.push('END:VCALENDAR');
+    return lines.join('\r\n') + '\r\n';
+  }
+
+  return { isPublished, listArticles, getArticle, archive, listEvents, countdowns, listMagazines, eventsIcs };
 });

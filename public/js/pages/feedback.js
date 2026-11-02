@@ -11,10 +11,12 @@
     required: [['message', 'Write your feedback first.']],
     extra: () => ({ rating }),
     success: 'Thanks! The eboard will read it.',
-    onReset: () => { rating = 0; paint(); }
+    onReset: () => { rating = 0; paint(); },
+    draftKey: 'feedback'
   });
   wireForm(document.getElementById('topic-form'), '/api/topic-requests', {
     required: [['topic', 'Tell us the topic you want covered.']],
-    success: 'Got it! We’ll pass it on to the writers.'
+    success: 'Got it! We’ll pass it on to the writers.',
+    draftKey: 'topic-request'
   });
 })();

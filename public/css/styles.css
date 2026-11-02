@@ -163,10 +163,10 @@ section { padding: 44px 0 0; }
 }
 .ig-digits span { font: 600 .65rem var(--sans); letter-spacing: .1em; text-transform: uppercase; }
 .ig-remind {
-  margin-top: 12px; width: 100%; background: rgba(255, 255, 255, .25); color: #fff; border: 0; padding: 9px; border-radius: 10px;
-  font: 700 .85rem var(--sans); cursor: pointer;
+  display: block; margin-top: 12px; background: rgba(255, 255, 255, .25); color: #fff; padding: 9px; border-radius: 10px;
+  font: 700 .85rem var(--sans); text-decoration: none; text-align: center;
 }
-.ig-remind.on { background: #fff; color: #c25591; }
+.ig-remind:hover { background: #fff; color: #c25591; }
 
 /* ---------- highlighted articles carousel ---------- */
 .carousel { position: relative; }
@@ -382,3 +382,10 @@ section { padding: 44px 0 0; }
 .footer-submit { margin: 16px 0 0; font-size: .95rem; }
 .mag-cover.soon { display: grid; place-items: center; align-content: center; gap: 12px; background: var(--sage); color: var(--forest); font: 600 1rem var(--sans); }
 .mag-cover.soon .logo { width: 55%; height: auto; aspect-ratio: 1; box-shadow: none; }
+.event-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.event-actions .btn { padding: 8px 14px; font-size: .85rem; }
+.page-hero .cal-subscribe { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 16px; }
+.cal-subscribe .muted { font-size: .9rem; }
+.filter-hint { margin: -4px 0 10px; font-size: .85rem; }
+.filter-summary { display: flex; align-items: center; gap: 12px; margin: 0 0 4px; font: 600 .95rem var(--sans); color: var(--forest); }
+.link-btn { background: none; border: 0; padding: 0; color: var(--pink); font: 600 .9rem var(--sans); text-decoration: underline; cursor: pointer; }
