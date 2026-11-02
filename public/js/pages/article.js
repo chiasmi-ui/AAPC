@@ -19,6 +19,6 @@
         ${img.caption ? `<figcaption>${esc(img.caption)}</figcaption>` : ''}</figure>`).join('')}</div>` : ''}
       <p style="text-align:center;margin-top:32px"><a class="btn ghost" href="archives.html">← More articles</a></p>`;
   } catch (err) {
-    root.innerHTML = `<div class="page-hero"><h1>Article not found</h1><p>${esc(err.message)}</p><p><a class="btn" href="archives.html">Browse the archives</a></p></div>`;
+    root.innerHTML = `<div class="page-hero"><h1>Article not found</h1><p>${id ? "That article doesn’t exist or isn’t published yet." : esc(err.message)}</p><p><a class="btn" href="archives.html">Browse the archives</a></p></div>`;
   }
 })();

@@ -317,8 +317,8 @@ section { padding: 44px 0 0; }
 /* ---------- calendar ---------- */
 .cal-wrap { padding: 20px; margin-top: 24px; }
 .cal-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
-.cal-head h2 { margin: 0; }
-.cal-head .script { color: var(--pink); }
+.cal-head h2 { margin: 0; white-space: nowrap; }
+@media (max-width: 480px) { .cal-head h2 { font-size: 1.5rem; } .cal-head .btn { padding: 8px 14px; } }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
 .cal-grid .dow { font: 700 .75rem var(--sans); text-transform: uppercase; color: var(--muted); text-align: center; padding: 4px 0; }
 .cal-day { min-height: 96px; background: #fff; border-radius: 10px; padding: 6px; border: 1px solid var(--line); font: .8rem var(--sans); overflow: hidden; }
